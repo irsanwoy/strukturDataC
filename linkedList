@@ -1,0 +1,152 @@
+#include<iostream>
+using namespace std;
+
+struct Murid{
+	string nama;
+	int nik;
+	
+	Murid *next;
+}*head,*tail,*newNode,*cur,*del;
+
+void create(string nama, int nik){
+	head = new Murid();
+    head->nama = nama;
+    head->nik = nik;
+    head->next = tail;
+    tail = head;
+}
+
+void addFirst(string nama, int nik){
+	newNode = new Murid();
+    newNode->nama = nama;
+    newNode->nik = nik;
+    newNode->next = head;
+    head = newNode;
+}
+
+void addLast(string nama, int nik){
+    newNode = new Murid();
+    newNode->nama = nama;
+    newNode->nik = nik;
+    newNode->next = NULL;
+    tail->next = newNode;
+    tail = newNode;
+}
+
+void removeFirst(){
+    del = head;
+    head = head->next;
+    delete del;
+}
+
+void removeLast(){
+    del = tail;
+    cur = head;
+    while(cur->next != tail){
+        cur = cur->next;
+    }
+    tail = cur;
+    tail->next = NULL;
+    delete del;
+}
+
+void changeFirst(string nama, int nik){
+    head->nama = nama;
+    head->nik = nik;
+}
+
+void changeLast(string nama, int nik){
+    tail->nama = nama;
+    tail->nik = nik;
+}
+
+void view(){
+    cur = head;
+    while(cur != NULL){
+        cout<<"nama : "<<cur->nama<<endl;
+        cout<<"nik : "<<cur->nik<<endl;
+        cur = cur->next;
+    }
+}
+
+int main(){
+    int pil,pil2,nik;
+    string nama;
+    
+    
+    start :
+    system("cls");
+    view();
+    
+    
+    cout<<"=====menu yang tersedia====="<<endl;
+    cout<<"1.buat data baru"<<endl;
+    cout<<"2.hapus data"<<endl;
+    cout<<"3.ubah data"<<endl;
+
+    cout<<"masukan pilihan anda disini :";
+    cin>>pil;
+    
+
+   switch(pil){
+    case 1 :
+        cout<<"1.tambah di awal"<<endl;
+        cout<<"2.tambah di akhir"<<endl;
+        cout<<"masukan pilihan kedua disini :";
+        cin>>pil2;
+        if(pil2 == 1){
+            cout<<"masukan nama :";
+            cin>>nama;
+            cout<<"masukan nik :";
+            cin>>nik;
+            addFirst(nama,nik);
+            goto start;
+        }else if(pil2 == 2){
+            cout<<"masukan nama :";
+            cin>>nama;
+            cout<<"masukan nik :";
+            cin>>nik;
+            addLast(nama,nik);
+            goto start;
+        }
+        break;
+    case 2: 
+        cout<<"1.hapus di awal"<<endl;
+        cout<<"2.hapus di akhir"<<endl;
+        cout<<"masukan pilihan kedua disini :";
+        cin>>pil2;
+        if(pil2 == 1){
+            removeFirst();
+            goto start;
+        }else if(pil2 == 2){
+            removeLast();
+            goto start;
+        }
+        break;
+    case 3: 
+        cout<<"1.ubah di awal"<<endl;
+        cout<<"2.ubah di akhir"<<endl;
+        cout<<"masukan pilihan kedua disini :";
+        cin>>pil2;
+        if(pil2 == 1){
+            cout<<"masukan nama :";
+            cin>>nama;
+            cout<<"masukan nik :";
+            cin>>nik;
+            changeFirst(nama,nik);
+            goto start;
+        }else if(pil2 == 2){
+            cout<<"masukan nama :";
+            cin>>nama;
+            cout<<"masukan nik :";
+            cin>>nik;
+            changeLast(nama,nik);
+            goto start;
+        }
+        break;
+
+        default :
+        cout<<"pilihan yang anda masukan salah!!"<<endl;
+        break;
+   }
+}
